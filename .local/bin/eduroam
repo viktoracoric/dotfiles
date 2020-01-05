@@ -1,0 +1,19 @@
+#!/bin/sh
+
+chosen=$(echo -e "Wireless\nWired\nWired with hotspot\nHotspot only\nDisconnect\n" | dmenu -p "Type of connection: ")
+
+case $chosen in
+	Wireless) sudo wpa_supplicant -i wlp3s0 -c /etc/wpa_supplicant/eduroam &
+	sleep 15;sudo dhcpcd wlp3s0;exit;;
+	Wired) sudo wpa_supplicant -D wired -i enp0s25 -c /etc/wpa_supplicant/eduroamw &
+	sleep 30;sudo dhcpcd enp0s25;exit;;
+	Wired\ with\ hotspot) sudo wpa_supplicant -D wired -i enp0s25 -c /etc/wpa_supplicant/eduroamw &
+	sleep 30;sudo dhcpcd enp0s25
+	sudo create_ap wlp3s0 enp0s25 😂😂😂😂👌👌👌👌 ayylmao.png &>/dev/null &
+	exit;;
+	Hotspot\ only) sudo create_ap wlp3s0 enp0s25 😂😂😂😂👌👌👌👌 ayylmao.png &>/dev/null &
+	exit;;
+	Disconnect) sudo pkill wpa_supplicant
+	sudo pkill dhcpcd
+	sudo pkill hostapd;;
+esac

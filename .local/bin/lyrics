@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo "Author: ";read autor
+echo "Song: ";read pjesma
+
+w3m $(echo https://www.azlyrics.com/lyrics/$autor/$pjesma.html | sed "s/\ //g" | tr '[:upper:]' '[:lower:]')

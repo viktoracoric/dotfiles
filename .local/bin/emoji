@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cat ~/.local/bin/emoji.txt | dmenu -i -l 15 | cut -d ' ' -f1 | xclip -selection clipboard
+notify-send "$(xclip -o -selection clipboard) has been copied in clipboard"
