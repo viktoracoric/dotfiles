@@ -105,16 +105,16 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1: Main"
-set $ws2 "2: Internet"
-set $ws3 "3: Uni"
-set $ws4 "4: Misc"
-set $ws5 "5: Comms"
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
-set $ws8 "8: Books"
-set $ws9 "9: Videos"
-set $ws10 "10: Music"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -177,7 +177,8 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+        status_command i3blocks
+	position top
 }
 
 # Custom
@@ -197,5 +198,4 @@ bindsym $mod+Shift+s gaps inner current minus 5
 bindsym $mod+Shift+d gaps inner current set 0; gaps outer current set 0
 gaps inner 10
 gaps outer 5
-assign [class="firefox"] $ws2
 assign [class="Signal"] $ws5
