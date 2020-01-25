@@ -12,6 +12,10 @@ Alat za teretanu koji računa maksimalnu težinu koju možemo podignuti.
 
 Privremeno generira šest pseudoslučajnih brojeva.
 
+## calc
+
+Kratka skripta za brzo računanje, zaokružuje na tri decimale pomoću scale argumenta.
+
 ## dmenumount / dmenuumount
 
 Mountanje i unmountanje diskova, Androida i USB-ova pomoću dmenua.
