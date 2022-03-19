@@ -6,7 +6,7 @@ Skripte se nalaze u ```.local/bin```, a konfiguracije u ```.config``` direktorij
 
 ## rijecdana
 
-Skripta dohvaća riječ dana i sprema je u datoteku. Preporuka za korištenje je skriptu dodati u crontab da se izvršava svakih 5-15 minuta (samo navesti punu putanju do skripte, i osigurati da skripta ima dopuštenje za izvršavanje, u skripti se prvo provjerava starost datoteke, tako da nije intenzivno na resurse), te zatim u konfiguraciju shella (```.bashrc```, ```.zshrc``` i sl.) dodati liniju ```[ -f ~/.cache/rijecdana.txt ] && cat ~/.cache/rijecdana.txt```.
+Skripta dohvaća riječ dana s Hrvatskog jezičnog portala i sprema je u datoteku. Preporuka za korištenje je skriptu dodati u crontab da se izvršava svakih 5-15 minuta (samo navesti punu putanju do skripte, i osigurati da skripta ima dopuštenje za izvršavanje, u skripti se prvo provjerava starost datoteke, tako da nije intenzivno na resurse), te zatim u konfiguraciju shella (```.bashrc```, ```.zshrc``` i sl.) dodati liniju ```[ -f ~/.cache/rijecdana.txt ] && cat ~/.cache/rijecdana.txt```.
 
 ## 1rm
 
