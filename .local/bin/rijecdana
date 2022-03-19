@@ -1,0 +1,7 @@
+#!/bin/sh
+
+[ -f ~/.cache/rijecdana.txt ] || touch -a -m -t "000001010000.00" ~/.cache/rijecdana.txt
+danasnjiDatum=$(date +"%Y%m%d")
+datumDatoteke=$(date -r ~/.cache/rijecdana.txt +"%Y%m%d")
+
+[ $danasnjiDatum -gt $datumDatoteke ] && echo "RIJEČ DANA (https://hjp.znanje.hr/word_of_the_day.php)" > ~/.cache/rijecdana.txt && w3m -dump https://hjp.znanje.hr/word_of_the_day.php | tail -n +2 | head -n -2 >> ~/.cache/rijecdana.txt
