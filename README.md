@@ -10,6 +10,10 @@ Skripta dohvaća riječ dana s Hrvatskog jezičnog portala i sprema je u datotek
 
 Dependency: ```w3m```
 
+## wordoftheday
+
+Slično kao i ```rijecdana```. Preporuka je dodati skriptu u crontab da se periodično izvršava, te u konfiguraciji shella (```.bashrc```, ```.zshrc``` i sl.) dodati liniju ```[ -f ~/.cache/wordoftheday.txt ] && cat ~/.cache/wordoftheday.txt```.
+
 ## 1rm
 
 Alat za teretanu koji računa maksimalnu težinu koju možemo podignuti.
