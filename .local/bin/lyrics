@@ -1,6 +1,10 @@
 #!/bin/sh
+autor=$1
+pjesma=$2
+[ -z "$autor" ] && echo "Author: " && read autor
+[ -z "$pjesma" ] && echo "Song: " && read pjesma
 
-echo "Author: ";read autor
-echo "Song: ";read pjesma
-
-w3m $(echo https://www.azlyrics.com/lyrics/$autor/$pjesma.html | sed "s/\ //g" | tr '[:upper:]' '[:lower:]')
+CONTENT=$(w3m -dump $(echo https://www.azlyrics.com/lyrics/$autor/$pjesma.html | sed "s/\ //g" | tr '[:upper:]' '[:lower:]'))
+ROWNUM=$(echo "$CONTENT" | grep -n "Submit Corrections" | cut -d : -f 1)
+TOTALNUM=$(echo "$CONTENT" | wc -l)
+[ -z "$ROWNUM" ] || echo "$CONTENT" | sed "${ROWNUM},${TOTALNUM}d" | tail -n +12 | head -n -4
