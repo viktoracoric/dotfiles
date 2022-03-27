@@ -3,8 +3,8 @@
 [ -f ~/.cache/wordoftheday.txt ] || touch -a -m -t "000001010000.00" ~/.cache/wordoftheday.txt
 todaysDate=$(date +"%Y%m%d")
 fileDate=$(date -r ~/.cache/wordoftheday.txt +"%Y%m%d")
-
-[ $todaysDate -gt $fileDate ] && CONTENT=$(w3m -dump https://www.merriam-webster.com/word-of-the-day)
+[ $todaysDate -gt $fileDate ] || exit
+CONTENT=$(w3m -dump https://www.merriam-webster.com/word-of-the-day)
 ROWNUM=$(echo "$CONTENT" | grep -n "See the entry >" | cut -d : -f 1)
 TOTALNUM=$(echo "$CONTENT" | wc -l)
 echo "WORD OF THE DAY (https://www.merriam-webster.com/word-of-the-day)" > ~/.cache/wordoftheday.txt && echo "$CONTENT" | sed "${ROWNUM},${TOTALNUM}d" | tail -n +36 | sed 2,5d >> ~/.cache/wordoftheday.txt && rm -rf ~/.w3m
