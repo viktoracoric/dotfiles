@@ -7,4 +7,5 @@ pjesma=$2
 CONTENT=$(w3m -dump $(echo https://www.azlyrics.com/lyrics/$autor/$pjesma.html | sed "s/\ //g" | tr '[:upper:]' '[:lower:]'))
 ROWNUM=$(echo "$CONTENT" | grep -n "Submit Corrections" | cut -d : -f 1)
 TOTALNUM=$(echo "$CONTENT" | wc -l)
-[ -z "$ROWNUM" ] || echo "$CONTENT" | sed "${ROWNUM},${TOTALNUM}d" | tail -n +12 | head -n -4
+[ -z "$ROWNUM" ] && echo "Lyrics for song not found" || echo "$CONTENT" | sed "${ROWNUM},${TOTALNUM}d" | tail -n +12 | head -n -4
+rm -rf ~/.w3m
