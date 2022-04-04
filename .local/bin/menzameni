@@ -1,0 +1,11 @@
+#!/bin/sh
+
+sati=$(date '+%H') # sat služi da se odredi ispisuje li se ručak ili večera
+
+CONTENT=$(w3m -dump https://www.scvz.unizg.hr/jelovnik-varazdin/)
+ROWNUM=$(echo "$CONTENT" | grep -n -m2 "Ručak" | tail -n 1 | cut -d : -f 1) # Dohvaćanje današnjeg menija (inače uvijek ispisuje i za ostatak tjedna)
+TOTALNUM=$(echo "$CONTENT" | wc -l)
+CONTENT=$(echo "$CONTENT" | sed "${ROWNUM},${TOTALNUM}d" | tail -n +66)
+
+[ $sati -lt "18" ] && echo "$CONTENT" | head -n -27 && echo ""
+[ $sati -gt "15" ] && echo "$CONTENT" | tail -n +28 | head -n -5 && echo "" # između 16 i 18 sati ispisuje i ručak i večeru
