@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Skripta za povezivanje s eduroam mrežama. Zamijeniti ssid i lozinka s pravim vrijednostima. Certifikate generirati pomoću eduroamCertGen skripte.
+
+[ "$(whoami)" != "root" ] && exec sudo -- "$0" "$@"
 chosen=$(echo -e "Wireless\nWired\nWired with hotspot\nHotspot only\nDisconnect\n" | dmenu -p "Type of connection: ")
 
 case $chosen in
@@ -9,9 +12,9 @@ case $chosen in
 	sleep 30;sudo dhcpcd enp0s25;exit;;
 	Wired\ with\ hotspot) sudo wpa_supplicant -D wired -i enp0s25 -c /etc/wpa_supplicant/eduroamw &
 	sleep 30;sudo dhcpcd enp0s25
-	sudo create_ap wlp3s0 enp0s25 😂😂😂😂👌👌👌👌 ayylmao.png &>/dev/null &
+	sudo create_ap wlp3s0 enp0s25 ssid lozinka &>/dev/null &
 	exit;;
-	Hotspot\ only) sudo create_ap wlp3s0 enp0s25 😂😂😂😂👌👌👌👌 ayylmao.png &>/dev/null &
+	Hotspot\ only) sudo create_ap wlp3s0 enp0s25 ssid lozinka &>/dev/null &
 	exit;;
 	Disconnect) sudo pkill wpa_supplicant
 	sudo pkill dhcpcd

@@ -1,0 +1,43 @@
+#!/bin/sh
+
+[ -z $1 ] && echo "Pružite putanju do vašeg certifikata." && exit
+[ "$(whoami)" != "root" ] && exec sudo -- "$0" "$@"
+putanja=$(realpath "$1")
+echo "Unesite e-mail"
+read email
+echo "Unesite lozinku"
+read -s lozinka
+echo "Vrsta mreže, b za bežično, z za žičano"
+read izbor
+
+[ $izbor = "b" ] && echo "ctrl_interface=/var/run/wpa_supplicant
+
+network={
+      ssid=\"eduroam\"
+      proto=WPA2 WPA
+      key_mgmt=WPA-EAP
+      pairwise=CCMP TKIP
+      group=CCMP TKIP
+      ca_cert=\""$putanja"\"
+      subject_match=\"freeradius.foi.hr\"
+      identity=\""$email"\"
+      eap=TTLS
+      password=\""$lozinka"\"
+      phase2=\"auth=PAP\"
+
+     }
+" > /etc/wpa_supplicant/eduroam ;
+
+[ $izbor = "z" ] && echo "ctrl_interface=/var/run/wpa_supplicant
+ctrl_interface_group=root
+ap_scan=0
+network={
+        key_mgmt=IEEE8021X
+        eap=TTLS
+        anonymous_identity=\"anonymous@foi.hr\"
+        identity=\""$email"\"
+        password=\""$lozinka"\"
+        ca_cert=\""$putanja"\"
+        phase2=\"auth=PAP\"
+}
+" > /etc/wpa_supplicant/eduroamw ;

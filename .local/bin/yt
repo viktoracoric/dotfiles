@@ -6,10 +6,10 @@ chosen=$(echo -e "Stream video\nStream audio\nDownload video\nDownload audio\nGe
 
 case $chosen in
 	Stream\ video) if [ "$stringcheck" = "https://" ]; then
-		mpv --really-quiet --ytdl-format='bestvideo[height<=720]+bestaudio' "$*" &
+		mpv --really-quiet --ytdl-format='bestvideo[height<=720]+bestaudio' "$*"
 		exit
 	else
-		mpv --really-quiet --ytdl-format='bestvideo[height<=720]+bestaudio' ytdl://ytsearch:"$*" &
+		mpv --really-quiet --ytdl-format='bestvideo[height<=720]+bestaudio' ytdl://ytsearch:"$*"
 		exit
 	fi;;
 	Stream\ audio) if [ "$stringcheck" = "https://" ];then
@@ -18,14 +18,14 @@ case $chosen in
 		mpv --ytdl-format=bestaudio ytdl://ytsearch:"$*"
 	fi;;
 	Download\ video) if [ "$stringcheck" = "https://"  ];then
-		youtube-dl "$*";notify-send "Download finished!"
+		yt-dlp --embed-metadata "$*";notify-send "Download finished!"
 	else
-		youtube-dl ytsearch:"$*";notify-send "Download finished!"
+		yt-dlp --embed-metadata ytsearch:"$*";notify-send "Download finished!"
 	fi;;
 	Download\ audio) if [ "$stringcheck" = "https://" ];then
-		youtube-dl -f bestaudio "$*";notify-send "Download finished!"
+		yt-dlp --embed-metadata -f bestaudio "$*";notify-send "Download finished!"
 	else
-		youtube-dl -f bestaudio ytsearch:"$*";notify-send "Download finished!"
+		yt-dlp --embed-metadata -f bestaudio ytsearch:"$*";notify-send "Download finished!"
 	fi;;
-	Get\ link) id=$(youtube-dl -s --get-id ytsearch:"$*");echo https://youtu.be/$id | xclip -selection clipboard;notify-send "Link has been copied to the clipboard";;
+	Get\ link) id=$(yt-dlp -s --get-id ytsearch:"$*");echo https://youtu.be/$id | xclip -selection clipboard;notify-send "Link has been copied to the clipboard";;
 esac

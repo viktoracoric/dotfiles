@@ -1,0 +1,13 @@
+#!/bin/sh
+sati=$(date '+%H')
+CONTENT=$(w3m -dump https://www.scvz.unizg.hr/jelovnik-varazdin/)
+ROWNUM=$(echo "$CONTENT" | grep -n -m2 "Ručak" | tail -n 1 | cut -d : -f 1)
+TOTALNUM=$(echo "$CONTENT" | wc -l)
+CONTENT=$(echo "$CONTENT" | sed "${ROWNUM},${TOTALNUM}d" | tail -n +66)
+case "$1" in
+    r) echo "$CONTENT" | head -n -23 ;;
+    v) echo "$CONTENT" | tail -n +27 ;;
+    rv) echo "$CONTENT" | head -n -23 && echo "" ; echo "$CONTENT" | tail -n +27 && echo "" ;;
+    *) [ $sati -lt "18" ] && echo "$CONTENT" | head -n -23 && echo "" ; [ $sati -gt "15" ] && echo "$CONTENT" | tail -n +27 && echo "" ;;
+esac
+rm -rf ~/.w3m
