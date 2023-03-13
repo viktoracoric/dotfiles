@@ -1,3 +1,44 @@
 #/bin/sh
-#Komanda se izvodi kao "1rm brojKG brojRepeticija"
-echo "scale=2;$1 / (1.0278 - 0.0278 * $2)" | bc
+#Komanda se izvodi kao "1rm [brojKG] [brojRepeticija] [opcionalno metoda računanja]"
+
+[ -z $1 ] || [ -z $2 ] && exit
+
+WEIGHT=$1
+REPS=$2
+
+OPTIND=3
+
+[ -z $3 ] && python -c "print((100 * $WEIGHT) / (48.8 + (53.8 * 2.71828**(-0.075 * $REPS))))" && exit
+
+while getopts "wbelLmo-" OPTION; do
+        case $OPTION in
+                #Wathan
+                w)
+                        python -c "print((100 * $WEIGHT) / (48.8 + (53.8 * 2.71828**(-0.075 * $REPS))))"
+                        ;;
+                #Brzycki
+                b)
+                        echo "scale=2;$WEIGHT / (1.0278 - 0.0278 * $REPS)" | bc
+                        ;;
+                #Epley
+                e)
+                        echo "scale=2;$WEIGHT * (1 + 0.0333 * $REPS)" | bc
+                        ;;
+                #Lander
+                l)
+                        echo "scale=2;(100 * $WEIGHT) / (101.3 - 2.67123 * $REPS)" | bc
+                        ;;
+                #Lombardi
+                L)
+                        python -c "print($WEIGHT * $REPS ** 0.1)"
+                        ;;
+                #Mayhew
+                m)
+                        python -c "print((100 * $WEIGHT) / (52.2 + (41.9 * 2.71828 ** (-0.055 * $REPS))))"
+                        ;;
+                #O'Conner
+                o)
+                        echo "scale=2;$WEIGHT * (1 + 0.025 * $REPS)" | bc
+                        ;;
+        esac
+done
