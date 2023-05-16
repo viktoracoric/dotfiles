@@ -1,13 +1,9 @@
 #!/bin/sh
 sati=$(date '+%H')
-CONTENT=$(w3m -dump https://www.scvz.unizg.hr/jelovnik-varazdin/)
-ROWNUM=$(echo "$CONTENT" | grep -n -m2 "Ručak" | tail -n 1 | cut -d : -f 1)
-TOTALNUM=$(echo "$CONTENT" | wc -l)
-CONTENT=$(echo "$CONTENT" | sed "${ROWNUM},${TOTALNUM}d" | tail -n +66)
+CONTENT=$(curl -s "https://www.scvz.unizg.hr/jelovnik-varazdin/" | grep -Pzo '<div[^>]*id="jelovnik-date-1"[^>]*>\K([\s\S]*?)(?=jelovnik-date-2)' | head -n -1 | sed -e 's/<[^>]*>//g' | sed 's/^\t*//g' | head -n -4)
 case "$1" in
-    r) echo "$CONTENT" | head -n -23 ;;
-    v) echo "$CONTENT" | tail -n +27 ;;
-    rv) echo "$CONTENT" | head -n -23 && echo "" ; echo "$CONTENT" | tail -n +27 && echo "" ;;
-    *) [ $sati -lt "18" ] && echo "$CONTENT" | head -n -23 && echo "" ; [ $sati -gt "15" ] && echo "$CONTENT" | tail -n +27 && echo "" ;;
+    r) echo "$CONTENT" | sed -n '/Ručak/,/Večera/p' | head -n -5 ;;
+    v) echo "$CONTENT" | sed -n '/Večera/,/EOF/p' ;;
+    rv) echo "$CONTENT" | sed -n '/Ručak/,/Večera/p' | head -n -5 ; echo ; echo "$CONTENT" | sed -n '/Večera/,/EOF/p' ;;
+    *) [ $sati -lt "18" ] && echo "$CONTENT" | sed -n '/Ručak/,/Večera/p' | head -n -5 && echo "" ; [ $sati -gt "15" ] && echo "$CONTENT" | sed -n '/Večera/,/EOF/p' && echo "" ;;
 esac
-rm -rf ~/.w3m
